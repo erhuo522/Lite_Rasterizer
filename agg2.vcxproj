@@ -80,6 +80,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="agg_test.cpp" />
+    <ClCompile Include="agg_test1.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="source\agg_define.cpp" />
     <ClCompile Include="source\agg_outline.cpp" />
     <ClCompile Include="source\agg_rasterizer.cpp" />

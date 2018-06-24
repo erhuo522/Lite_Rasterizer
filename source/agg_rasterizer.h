@@ -85,6 +85,7 @@ namespace agg
 		}
 
 		//--------------------------------------------------------------------
+		//将轮廓转换成扫描线
 		template<class Renderer> void render(Renderer& r,
 			const rgba8& c,
 			int dx = 0,

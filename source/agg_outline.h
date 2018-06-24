@@ -58,8 +58,8 @@ namespace agg
 		cell**    m_cells;        //像素单元格 
 		cell*     m_cur_cell_ptr; //当前像素单元格指针
 
-		cell**    m_sorted_cells;
-		unsigned  m_sorted_size;
+		cell**    m_sorted_cells; //cell排序的内存
+		unsigned  m_sorted_size;  //cell排序的数量
 		cell      m_cur_cell;     //当前像素单元
 		int       m_cur_x;
 		int       m_cur_y;

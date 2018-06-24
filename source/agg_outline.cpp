@@ -418,6 +418,7 @@ namespace agg
 
 
 	//------------------------------------------------------------------------
+	//对cell进行快速排序，使用的是非递归方式
 	void outline::qsort_cells(cell** start, unsigned num)
 	{
 		cell**  stack[80];
@@ -532,6 +533,8 @@ namespace agg
 	{
 		if (m_num_cells == 0)
 			return;
+
+		//分配cell排序的内存空间
 		if (m_num_cells > m_sorted_size)
 		{
 			delete[] m_sorted_cells;
@@ -546,6 +549,7 @@ namespace agg
 		unsigned nb = m_num_cells >> cell_block_shift;
 		unsigned i;
 
+		//将二级cell指针变成一级cell指针，并存储到sorted_ptr
 		while (nb--)
 		{
 			cell_ptr = *block_ptr++;
@@ -555,26 +559,29 @@ namespace agg
 				*sorted_ptr++ = cell_ptr++;
 			}
 		}
-
+		//将未满的blok块中cell指针，也存储到sorted_ptr;
 		cell_ptr = *block_ptr++;
 		i = m_num_cells & cell_block_mask;
 		while (i--)
 		{
 			*sorted_ptr++ = cell_ptr++;
 		}
+
+		//增加结束符，并使用快速排序算法，对cell进行排序
 		m_sorted_cells[m_num_cells] = 0;
 		qsort_cells(m_sorted_cells, m_num_cells);
 	}
 
 	const cell* const* outline::cells()
 	{
+		//闭合多边形图形
 		if (m_flags & not_closed)
 		{
 			line_to(m_close_x, m_close_y);
 			m_flags &= ~not_closed;
 		}
 
-		//Perform sort only the first time.
+		//排序所有cell
 		if (m_flags & sort_required)
 		{
 			add_cur_cell();
@@ -584,6 +591,7 @@ namespace agg
 			sort_cells();
 			m_flags &= ~sort_required;
 		}
+		//返回排序后的所有cell
 		return m_sorted_cells;
 	}
 
